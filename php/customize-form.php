@@ -33,7 +33,7 @@
             </th>
             <td>
                 <ul id="normal-fields" class="jquery-sortable">
-                    <?php foreach ($htmlFormData['normal_fields'] as $key => $normal_field) : 
+                    <?php if (is_array($htmlFormData['normal_fields']) && 0 < count($htmlFormData['normal_fields'])) : foreach ($htmlFormData['normal_fields'] as $key => $normal_field) : 
                         
                         require_once(IMNICAMAIL_PLUGIN_DIR.'/thirdparty/simplehtmldom/simple_html_dom.php');
                         $input_html = str_get_html($normal_field['input']);
@@ -42,7 +42,7 @@
                             <input type="checkbox" name="enabled[]" <?php echo ($input_html->find('#FormValue_EmailAddress', 0)) ? 'disabled="disabled"' : ''; ?> <?php __checked_selected_helper('true', $normal_field['enabled'], true, 'checked'); ?> value="<?php echo $key; ?>" /> <?php echo $normal_field['label']; ?>
                             <input type="hidden" name="order[]" value="<?php echo $key; ?>" />
                         </li>
-                    <?php endforeach; ?>
+                    <?php endforeach; endif; ?>
                 </ul>
             </td>
         </tr>

@@ -36,6 +36,9 @@ Coming Soon
 = 0.2 =
 * Minor Fixes
 
+= 0.2.1 =
+* Minor Fixes
+
 == Arbitrary section ==
 
 Coming Soon
