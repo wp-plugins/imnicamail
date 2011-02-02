@@ -1,0 +1,26 @@
+.imnicamail-widget {
+    font-family: 'Arial';
+    font-size: 12px;
+}
+
+.imnicamail-widget .im-form-row {
+    margin: 0 0 10px;
+}
+
+.imnicamail-widget .im-form-row label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 0 3px;
+}
+
+.imnicamail-widget .im-form-row input,
+.imnicamail-widget .im-form-row textarea {    
+    font-family: 'Arial';
+}
+
+.imnicamail-widget #FormButton_Subscribe {
+    display: block;
+    font-weight: bold;
+    margin: 0 auto;
+}
