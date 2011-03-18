@@ -26,7 +26,7 @@
                 add_action('widgets_init', array($this, 'loadWidget'), 1); 
                 
                 if (is_admin()) {        
-                    // Todo: Find a way to enqueue a file to a specific admin page.
+                    // @todo Find a way to enqueue a file to a specific admin page.
                     wp_enqueue_style('imnicamail-admin', IMNICAMAIL_PLUGIN_URL.'/styles/imnicamail-admin.css');
                     
                     switch ($_GET['page']) {
@@ -82,12 +82,18 @@
                     add_action('wp_ajax_imnicamail_set_submit_image', array($this, 'setSubmitImage'));
 
                     // Add admin menus.
-                    add_action('admin_menu', array($this, 'addAdminMenus'));
+                    add_action('admin_menu', array($this, 'adminMenu'));
                 } else {
+                    add_shortcode('im-form', array($this, 'showForm'));
+                    
                     if (1 == intval($options['default_styling'])) {
                         wp_enqueue_style('imnicamail', IMNICAMAIL_PLUGIN_URL.'/styles/imnicamail.css');
                     }
                 }
+            }
+            
+            function showForm() {
+                echo 'Working On IT';
             }
             
             function setSubmitImage() {
@@ -104,11 +110,13 @@
             * @return void
             */
             
-            function addAdminMenus() {
+            function adminMenu() {
+                $page_hooks = array();
+                
                 add_menu_page('ImnicaMail', 'ImnicaMail', 'manage_options', 'imnicamail', array($this, 'settingsPage'));
-                add_submenu_page('imnicamail', __('Settings'), __('Settings'), 'manage_options', 'imnicamail', array($this, 'settingsPage'));
-                add_submenu_page('imnicamail', __('Authentication'), __('Authentication'), 'manage_options', 'imnicamail-authentication', array($this, 'authenticationPage'));
-                add_submenu_page('imnicamail', __('Customize Form'), __('Customize Form'), 'manage_options', 'imnicamail-customize-form', array($this, 'displayFormCustomizationPage'));                
+                $page_hooks['imnicamail'] = add_submenu_page('imnicamail', __('Settings'), __('Settings'), 'manage_options', 'imnicamail', array($this, 'settingsPage'));
+                $page_hooks['imnicamail-authentication'] = add_submenu_page('imnicamail', __('Authentication'), __('Authentication'), 'manage_options', 'imnicamail-authentication', array($this, 'authenticationPage'));
+                $page_hooks['imnicamail-customize-form'] = add_submenu_page('imnicamail', __('Customize Form'), __('Customize Form'), 'manage_options', 'imnicamail-customize-form', array($this, 'displayFormCustomizationPage'));                
             }
             
 
@@ -234,23 +242,25 @@
                 $Options = $this->getAdminOptions();  
                 $formHtml = $Options['FormHtml'];
                 $normalFields = $formHtml['normal_fields'];
-                
-                $newNormalFields = array();
                 $newOrderIndexes = $_POST['new_order'];   
-                $newEnables = $_POST['new_enables'];
                 
-                foreach ($newOrderIndexes as $k => $f) {
-                    $normalFields[$f]['enabled'] = $newEnables[$k];
-                    $newNormalFields[] = $normalFields[$f];     
-                }
+                if (is_array($normalFields) && is_array($newOrderIndexes)) {
+                    $newNormalFields = array();               
+                    $newEnables = $_POST['new_enables'];
+                   
+                    foreach ($newOrderIndexes as $k => $f) {
+                        $normalFields[$f]['enabled'] = $newEnables[$k];
+                        $newNormalFields[] = $normalFields[$f];     
+                    }
 
-                $formHtml['normal_fields'] = $newNormalFields;
-                 
-                $return = $this->updateAdminOptions(array(
-                    'FormHtml' => $formHtml  
-                ));
+                    $formHtml['normal_fields'] = $newNormalFields;
+                     
+                    $return = $this->updateAdminOptions(array(
+                        'FormHtml' => $formHtml  
+                    ));
                 
-                die(json_encode($newNormalFields));
+                    die(json_encode($newNormalFields));
+                }
             }
             
             

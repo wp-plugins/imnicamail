@@ -4,7 +4,7 @@ Donate link: http://www.imnicamail.com/
 Tags: mail, autoresponder
 Requires at least: 3.0
 Tested up to: 3.0
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 
 This plugin adds a subsciption form to your blog, so that your viewers can subscribe easily to your mail list.
 
@@ -34,9 +34,12 @@ Coming Soon
 * First Release
 
 = 0.2 =
-* Minor Fixes
+* New Features
 
 = 0.2.1 =
+* Minor Fixes
+
+= 0.2.2 =
 * Minor Fixes
 
 == Arbitrary section ==

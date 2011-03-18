@@ -136,8 +136,6 @@ jQuery(document).ready(function($){
                                     },
                                     function(response) {
                                         if (response.success) {
-                                            console.log(response);
-                                            
                                             $('#normal-fields').empty();
                                             
                                             $.each(response.FormHTML.normal_fields, function(index, value){
@@ -188,20 +186,19 @@ jQuery(document).ready(function($){
         $('#imnicamail-customize-form #form-customization-submit').addClass('button-primary-disabled').attr('disabled', 'disabled').val('Saving Changes...');
         
         var newOrder = [];
+        var newEnables = [];                    
         
-        $('#imnicamail-customize-form input[name=order\[\]]').each(function(index, elem){
-            newOrder.push($(elem).val());
-        });   
-        
-        var newEnables = [];
-        
-        $('#imnicamail-customize-form input[name=enabled\[\]]').each(function(index, elem){
-            if ($(elem).is(':checked')) {
-                newEnables.push(true);    
-            } else {
-                newEnables.push(false);    
+        $('#imnicamail-customize-form input[name]').each(function(index, elem){
+            if ('order[]' == $(elem).attr('name')) {
+                newOrder.push($(elem).val());
+            } else if ('enabled[]' == $(elem).attr('name')) {
+                if ($(elem).is(':checked')) {
+                    newEnables.push(true);    
+                } else {
+                    newEnables.push(false);    
+                }
             }
-        });  
+        });                             
         
         $.post
         (
