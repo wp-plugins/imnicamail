@@ -1,32 +1,26 @@
 === ImnicaMail ===
-Contributors: imnicamail   
+Contributors: ImnicaMail   
 Donate link: http://www.imnicamail.com/
 Tags: mail, autoresponder
-Requires at least: 3.0
+Requires at least: 3.1
 Tested up to: 3.0
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 
-This plugin adds a subsciption form to your blog, so that your viewers can subscribe easily to your mail list.
+This plugin adds a subsciption form to your blog, so that your viewers can subscribe easily to your mail list.   
+Note: Shortcode management added. Use [im-form] to show form in posts, pages, etc.
 
 == Description ==
 
 This plugin adds a subsciption form to your blog, so that your viewers can subscribe easily to your mail list.
+Note: Shortcode management added. Use [im-form] to show form in posts, pages, etc.
 
 == Frequently Asked Questions ==
 
-Coming Soon
-
 == Upgrade Notice ==
-
-Coming Soon
 
 == Installation ==
 
-Coming Soon
-
 == Screenshots ==
-
-Coming Soon
 
 == Changelog ==
 
@@ -42,10 +36,10 @@ Coming Soon
 = 0.2.2 =
 * Minor Fixes
 
+= 0.2.3 = 
+* Shortcode Support
+* Script Enhancements
+
 == Arbitrary section ==
 
-Coming Soon
-
 == A brief Markdown Example ==
-
-Coming Soon

@@ -3,21 +3,21 @@ jQuery(document).ready(function($){
     
     var SessionID;
     
-    var showUpdateMessage = function(msg) {   
+    var showUpdateMessage = function (msg) {   
         $('#update-message').slideUp('slow', function(){
             $('#udpate-text').empty().append(msg);
             $(this).slideDown();
         });
     }
     
-    var showErrorMessage = function(msg) {                   
+    var showErrorMessage = function (msg) {                   
         $('#error-message').slideUp('slow', function(){
             $('#error-text').empty().append(msg);
             $(this).slideDown();
         }); 
     }
     
-    var hideMessages = function() {
+    var hideMessages = function () {
         $('#update-message').slideUp();   
         $('#error-message').slideUp(); 
     }
@@ -32,10 +32,10 @@ jQuery(document).ready(function($){
             imnicamail_url : imnicamail_cfg.imnicamail_url, 
             "cookie" : encodeURIComponent(document.cookie)
         },
-        success: function(response) {
-            if (response.Success) {
+        success: function (response) {
+            if ('object' == typeof response && response.Success) {
                 SessionID = response.SessionID; 
-                $('#imnicamail-customize-form #refresh-lists-button').removeClass('button-primary-disabled').removeAttr('disabled');
+                $('#imnicamail-customize-form #refresh-lists-button').removeClass('button-disabled').removeAttr('disabled');
                 showUpdateMessage('Login validated, you may now procceed.');
             } else {
                 showErrorMessage('Login invalid, please complete you login info at the authentication page.');
@@ -50,8 +50,8 @@ jQuery(document).ready(function($){
             return;
         }
         
-        $('#imnicamail-customize-form #refresh-lists-button').addClass('button-primary-disabled').attr('disabled', 'disabled').val('Refreshing...');
-        $('#imnicamail-customize-form #generate-form-button').addClass('button-primary-disabled').attr('disabled', 'disabled');
+        $('#imnicamail-customize-form #refresh-lists-button').addClass('button-disabled').attr('disabled', 'disabled').val('Refreshing...');
+        $('#imnicamail-customize-form #generate-form-button').addClass('button-disabled').attr('disabled', 'disabled');
                     
         $.post
         (
@@ -62,15 +62,15 @@ jQuery(document).ready(function($){
                 imnicamail_url : imnicamail_cfg.imnicamail_url,
                 "cookie" : encodeURIComponent(document.cookie)
             },    
-            function(response) {
-                $('#imnicamail-customize-form #refresh-lists-button').removeClass('button-primary-disabled').removeAttr('disabled').val('Refresh');
+            function (response) {
+                $('#imnicamail-customize-form #refresh-lists-button').removeClass('button-disabled').removeAttr('disabled').val('Refresh');
         
-                if (response.Success) {
+                if ('object' == typeof response && response.Success) {
                     $('#imnicamail-customize-form #lists').empty();
                     $.each(response.Lists, function(index, value){
                         $('#imnicamail-customize-form #lists').append($(document.createElement('option')).val(value.ListID).append(value.Name));
                     });      
-                    $('#imnicamail-customize-form #generate-form-button').removeClass('button-primary-disabled').removeAttr('disabled');
+                    $('#imnicamail-customize-form #generate-form-button').removeClass('button-disabled').removeAttr('disabled');
                     
                     showUpdateMessage('Subscription lists successfully refreshed.');
                 } else {            
@@ -90,7 +90,7 @@ jQuery(document).ready(function($){
             return;
         }
         
-        $('#imnicamail-customize-form #generate-form-button').addClass('button-primary-disabled').attr('disabled', 'disabled').val('Generating Form...');
+        $('#imnicamail-customize-form #generate-form-button').addClass('button-disabled').attr('disabled', 'disabled').val('Generating Form...');
         
         $.post
         (
@@ -102,9 +102,8 @@ jQuery(document).ready(function($){
                 imnicamail_url : imnicamail_cfg.imnicamail_url, 
                 "cookie" : encodeURIComponent(document.cookie)
             },
-            function(response) {
-                if (response.Success) {     
-                    
+            function (response) {
+                if ('object' == typeof response && response.Success) {     
                     var CustonFieldsArr = [];
                     
                     $.each(response.CustomFields, function(index, value){
@@ -122,10 +121,10 @@ jQuery(document).ready(function($){
                             "cookie" : encodeURIComponent(document.cookie), 
                             CustomFields : CustonFieldsArr.join(',')
                         },
-                        function(response) {
-                            $('#imnicamail-customize-form #generate-form-button').removeClass('button-primary-disabled').removeAttr('disabled').val('Generate Form');
+                        function (response) {
+                            $('#imnicamail-customize-form #generate-form-button').removeClass('button-disabled').removeAttr('disabled').val('Generate Form');
                             
-                            if (response.Success) {
+                            if ('object' == typeof response && response.Success) {
                                 $.post
                                 (
                                     imnicamail_cfg.ajaxurl, 
@@ -134,8 +133,8 @@ jQuery(document).ready(function($){
                                         FormHTMLCode : response.HTMLCode.join(''), 
                                         "cookie" : encodeURIComponent(document.cookie)
                                     },
-                                    function(response) {
-                                        if (response.success) {
+                                    function (response) {
+                                        if ('object' == typeof response && response.success) {
                                             $('#normal-fields').empty();
                                             
                                             $.each(response.FormHTML.normal_fields, function(index, value){
@@ -183,7 +182,7 @@ jQuery(document).ready(function($){
     });
     
     $('#imnicamail-customize-form #form-customization-submit').click(function(){
-        $('#imnicamail-customize-form #form-customization-submit').addClass('button-primary-disabled').attr('disabled', 'disabled').val('Saving Changes...');
+        $('#imnicamail-customize-form #form-customization-submit').addClass('button-disabled').attr('disabled', 'disabled').val('Saving Changes...');
         
         var newOrder = [];
         var newEnables = [];                    
@@ -208,8 +207,8 @@ jQuery(document).ready(function($){
                 new_order: newOrder,
                 new_enables: newEnables
             },
-            function(response) {
-                $('#imnicamail-customize-form #form-customization-submit').removeClass('button-primary-disabled').removeAttr('disabled').val('Save Changes');
+            function (response) {
+                $('#imnicamail-customize-form #form-customization-submit').removeClass('button-disabled').removeAttr('disabled').val('Save Changes');
                 showUpdateMessage('Subscription form successfully updated.');
             },
             'json' 

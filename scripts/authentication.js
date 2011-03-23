@@ -1,8 +1,16 @@
 jQuery(document).ready(function($){
-    $('#imnicamail-authentication #submit').click(function(){
-        $('#imnicamail-authentication #submit').attr('disabled', 'disabled');
-        $('#imnicamail-authentication #success-message').slideUp();
-        $('#imnicamail-authentication #error-message').slideUp();
+    var ui = {
+        submit: $('#imnicamail-authentication #submit'),      
+        success_message: $('#imnicamail-authentication #success-message'),
+        error_message: $('#imnicamail-authentication #error-message'),
+        username: $("#imnicamail-authentication #username"),
+        password: $("#imnicamail-authentication #password")
+    };
+    
+    ui.submit.click(function(){
+        ui.submit.attr('disabled', 'disabled');
+        ui.success_message.slideUp();
+        ui.error_message.slideUp();
         
         $.post
         (
@@ -10,17 +18,18 @@ jQuery(document).ready(function($){
             {            
                 action : "imnicamail_login", 
                 save : true,       
-                username : $("#imnicamail-authentication #username").val(), 
-                password : $("#imnicamail-authentication #password").val(), 
+                username : ui.username.val(), 
+                password : ui.password.val(), 
                 imnicamail_url : imnicamail_cfg.imnicamail_url, 
                 "cookie" : encodeURIComponent(document.cookie)
             },                                                    
-            function(response){                                     
-        $('#imnicamail-authentication #submit').removeAttr('disabled');
-                if (response.Success) {                          
-                    $('#imnicamail-authentication #success-message').slideDown();
+            function (response) {                                     
+                ui.submit.removeAttr('disabled');
+                
+                if ('object' == typeof response && response.Success) {                          
+                    ui.success_message.slideDown();
                 } else {
-                    $('#imnicamail-authentication #error-message').slideDown();
+                    ui.error_message.slideDown();
                 }
             }, 
             'json'

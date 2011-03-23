@@ -17,7 +17,7 @@
     padding: 6px 5px 0;
 }
 
-.jquery-sortable .jquery-sortable-item-placeholder{
+.jquery-sortable .jquery-sortable-item-placeholder {
     background: #ddd;
     border: 1px dashed #eee;
     border-radius: 4px;
@@ -26,4 +26,4 @@
     height: 30px;
     margin: 0 0 5px;
     padding: 0;
-}
+}      

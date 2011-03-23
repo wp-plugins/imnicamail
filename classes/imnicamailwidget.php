@@ -5,9 +5,7 @@
         }
 
         function widget($args, $instance) {
-            extract($args);
-                                                                                                
-            require_once(IMNICAMAIL_PLUGIN_DIR.'/thirdparty/simplehtmldom/simple_html_dom.php'); 
+            extract($args);                                                                    
             
             global $ImnicaMailPlugin;
             $options = $ImnicaMailPlugin->getAdminOptions();

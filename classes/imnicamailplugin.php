@@ -1,8 +1,9 @@
 <?php
     
     if (!class_exists("ImnicaMailPlugin")) {
-        
-        require_once(IMNICAMAIL_PLUGIN_DIR.'/classes/imnicamailwidget.php');
+                                                                                                
+        require_once(IMNICAMAIL_PLUGIN_DIR.'/thirdparty/simplehtmldom/simple_html_dom.php'); 
+        require_once(IMNICAMAIL_PLUGIN_DIR.'/classes/ImnicaMailWidget.php');
 
         class ImnicaMailPlugin {
 
@@ -25,10 +26,10 @@
                 
                 add_action('widgets_init', array($this, 'loadWidget'), 1); 
                 
-                if (is_admin()) {        
-                    // @todo Find a way to enqueue a file to a specific admin page.
-                    wp_enqueue_style('imnicamail-admin', IMNICAMAIL_PLUGIN_URL.'/styles/imnicamail-admin.css');
-                    
+                if (is_admin()) {    
+                    /**
+                    * @todo Transfer all this functions to its proper handler.
+                    */
                     switch ($_GET['page']) {
                         case 'imnicamail':   
                             wp_enqueue_script('imnicamail-settings', IMNICAMAIL_PLUGIN_URL.'/scripts/settings.js', array('jquery'));
@@ -92,8 +93,9 @@
                 }
             }
             
-            function showForm() {
-                echo 'Working On IT';
+            function showForm($atts, $content = null, $code = "") {
+                $options = $this->getAdminOptions();
+                include(IMNICAMAIL_PLUGIN_DIR.'/php/form.php');
             }
             
             function setSubmitImage() {
@@ -106,17 +108,17 @@
             
             /**
             * Adds the administration menus.
-            * 
-            * @return void
             */
             
             function adminMenu() {
                 $page_hooks = array();
                 
                 add_menu_page('ImnicaMail', 'ImnicaMail', 'manage_options', 'imnicamail', array($this, 'settingsPage'));
-                $page_hooks['imnicamail'] = add_submenu_page('imnicamail', __('Settings'), __('Settings'), 'manage_options', 'imnicamail', array($this, 'settingsPage'));
-                $page_hooks['imnicamail-authentication'] = add_submenu_page('imnicamail', __('Authentication'), __('Authentication'), 'manage_options', 'imnicamail-authentication', array($this, 'authenticationPage'));
-                $page_hooks['imnicamail-customize-form'] = add_submenu_page('imnicamail', __('Customize Form'), __('Customize Form'), 'manage_options', 'imnicamail-customize-form', array($this, 'displayFormCustomizationPage'));                
+                $page_hooks['imnicamail'] = add_submenu_page('imnicamail', __('Settings &laquo; ImnicaMail'), __('Settings'), 'manage_options', 'imnicamail', array($this, 'settingsPage'));
+                $page_hooks['imnicamail-authentication'] = add_submenu_page('imnicamail', __('Authentication &laquo; ImnicaMail'), __('Authentication'), 'manage_options', 'imnicamail-authentication', array($this, 'authenticationPage'));
+                $page_hooks['imnicamail-customize-form'] = add_submenu_page('imnicamail', __('Customize Form &laquo; ImnicaMail'), __('Customize Form'), 'manage_options', 'imnicamail-customize-form', array($this, 'displayFormCustomizationPage'));                
+                
+                add_action("load-{$page_hooks['imnicamail-customize-form']}", array($this, 'loadPageCustomizeForm'));
             }
             
 
@@ -128,25 +130,20 @@
              
             function getAdminOptions() {
                 return get_option($this->AdminOptions);
-            }
-
+            }   
+            
             
             /**
-            * Displays the admin page by getting content from php/admin_view.php file.
-            *
-            * @return void
+            * Handle the cutomize form load action.
             */
-             
-            function displayAdminPage() {
-                $Options = $this->getAdminOptions();
-                include(IMNICAMAIL_PLUGIN_DIR."/php/admin_view.php");
+            
+            function loadPageCustomizeForm() {
+                wp_enqueue_style('imnicamail-admin', IMNICAMAIL_PLUGIN_URL.'/styles/imnicamail-admin.css');
             }
             
             
             /**
             * Display the form customization page.
-            * 
-            * @return void
             */
             
             function displayFormCustomizationPage() {
@@ -157,8 +154,6 @@
            
             /**
             * Display the settings page.
-            * 
-            * @return void
             */
            
             function settingsPage() {
@@ -169,8 +164,6 @@
            
             /**
             * Display the settings page.
-            * 
-            * @return void
             */
            
             function authenticationPage() {
@@ -183,7 +176,6 @@
             * adds an option to the wordpress options.
             *
             * @param array $OptionArray
-            * @return void
             */
              
             function updateAdminOptions($OptionArray) {
@@ -297,9 +289,6 @@
             
             /**
              * echos the result of CURL call to the given Imnica Mail server.
-             *
-             * @return void
-             * @author ImnicaMail
              */
              
             function loginCheck() {
@@ -332,9 +321,6 @@
             
             /**
              * echos all the subscriber lists
-             *
-             * @return void
-             * @author ImnicaMail
              */
              
             function getSubscriberLists() {
@@ -355,9 +341,6 @@
             
             /**
              * returns the custom fields of given subscriber list
-             *
-             * @return void
-             * @author ImnicaMail
              */
              
             function getCustomFields() {
@@ -379,9 +362,6 @@
             
             /**
              * echos the subscription form HTML code
-             *
-             * @return void
-             * @author ImnicaMail
              */
              
             function getSubscriptionFormHTMLCode() {
@@ -453,4 +433,4 @@
             }     
         }
     }
-    ?>
+?>
