@@ -1,0 +1,29 @@
+.jquery-sortable {
+    background: #ccc;
+    border: 1px solid #bbb;
+    padding: 5px 5px 0 !important;
+    width: 300px !important;
+}
+
+.jquery-sortable .jquery-sortable-item {
+    background: #fff;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    cursor: move;           
+    height: 24px;
+    margin: 0 0 5px;
+    padding: 6px 5px 0;
+}
+
+.jquery-sortable .jquery-sortable-item-placeholder {
+    background: #ddd;
+    border: 1px dashed #eee;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    height: 30px;
+    margin: 0 0 5px;
+    padding: 0;
+}      
