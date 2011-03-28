@@ -3,7 +3,7 @@
     if (!class_exists("ImnicaMailPlugin")) {
                                                                                                 
         require_once(IMNICAMAIL_PLUGIN_DIR.'/thirdparty/simplehtmldom/simple_html_dom.php'); 
-        require_once(IMNICAMAIL_PLUGIN_DIR.'/classes/ImnicaMailWidget.php');
+        require_once(IMNICAMAIL_PLUGIN_DIR.'/classes/imnicamailwidget.php');
 
         class ImnicaMailPlugin {
 
